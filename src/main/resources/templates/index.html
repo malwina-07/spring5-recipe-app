@@ -7,5 +7,19 @@
 <body>
 <h1>My Recipies! Hurra !! Yeap!</h1>
 
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+        </tr>
+        <tr th:each="recipe : ${recipes}">
+            <td th:text="${recipe.id}">123</td>
+            <td th:text="${recipe.description}">Testy Goodnees</td>
+        </tr>
+    </table>
+</div>
+
+
 </body>
 </html>
