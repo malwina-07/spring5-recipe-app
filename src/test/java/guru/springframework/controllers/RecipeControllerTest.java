@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
 
@@ -75,5 +76,18 @@ public class RecipeControllerTest{
         Set<Recipe> setReController = argumentCaptor.getValue();
         assertEquals(2, setReController.size());
 
+    }
+    @Test
+    public void testGetRecipe() throws Exception {
+
+        Recipe recipe = new Recipe();
+        recipe.setId(1l);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(recipeController).build();
+        when(recipeService.findById(anyLong())).thenReturn(recipe);
+
+        mockMvc.perform(get("/recipe/show/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recipe/show"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("recipe"));
     }
 }
